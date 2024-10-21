@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="author" content="The Mad Thinker">
+<meta name="viewport" content="width=device-width">
+<meta content="IE=11.0000" http-equiv="X-UA-Compatible">
+<meta content="IE=11.0000" http-equiv="X-UA-Compatible">
+<meta content="IE=11.0000" http-equiv="X-UA-Compatible">
+<html lang="en"></html>
+
+<style>
+	#inputbox
+	{
+		width: 704px; 
+		height: 18px;
+		min-height: 18px;
+		max-height: 18px;
+		margin-left: 8px;
+		margin-bottom: 5px;
+		border-width: 2px 2px 2px; 
+		background-color:white; 
+		border-style: solid; 
+		overflow: hidden;
+		border-color: rgb(109, 119, 119) rgb(247, 247, 247) rgb(247, 247, 247) rgb(119, 119, 119); 
+	}
+	#outbox
+	{
+		   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+		   white-space: -pre-wrap;      /* Opera 4-6 */
+		   white-space: -o-pre-wrap;    /* Opera 7 */
+		   white-space: pre-wrap;       /* css-3 */
+		word-wrap: break-word;
+		text-align: left;
+		font-family: Courier;
+		border-width: 2px 2px 2px; 
+		background-color:white; 
+		border-style: solid; 
+		border-color: rgb(119, 119, 119) rgb(247, 247, 247) rgb(247, 247, 247) rgb(119, 119, 119); 
+		width: 700px; 
+		margin-right: auto; 
+		margin-left: auto; 
+		display: block; 
+		height: 400px; 
+		overflow-y: auto; 
+		min-height: 400px; 
+		max-height: 400px;
+		 font-size: 10pt;
+		overflow-x: hidden;
+	}
+	#outbox 
+	{
+		margin: 0px;
+	}
+	#popupform
+	{
+		width:100%;
+		height:100%;
+		opacity:.95;
+		top:0;
+		left:0;
+		display:none;
+		position:fixed;
+	background-color:#313131;
+		overflow:auto;
+	}
+	#box{
+		float:left;
+		background-color:#fff;
+		color:black;
+		padding: 20px;
+		overflow-y: auto;
+		overflow-x: hidden;
+		width: 90%;
+		height: 90%;
+		margin-left: 3%;
+		margin-top: 2%;
+		border:2px solid #ccc;
+		-moz-border-radius: 20px;
+		-webkit-border-radius:20px;
+		-khtml-border-radius:20px;
+		-moz-box-shadow: 0 1px 5px #333;
+		-webkit-box-shadow: 0 1px 5px #333;
+		z-index:101;
+	}
+	
+	#close
+	{
+		z-index: 102;
+		position: fixed;
+		top: 1.5%;
+		right: 2.5%;
+		cursor: pointer;
+		border-radius: 15px;
+		color: #fff;
+		border: 1px solid white;
+		background: #C04F51;
+		font-size: 31px;
+		font-weight: bold;
+		display: inline-block;
+		line-height: 0px;
+		padding: 12px 2px 2px 2px;   
+	}
+	#close:before {
+		content: "X";
+		font-family: Courier;
+	}
+	</style>
+
+<title>CPRS Garbage Removal Kit</title>
+</div>
+
+<!-- Intro Section   ================================================== -->
+
+</div>
+
+</div>
+
+<div style="display:block; width: 870px; height: 500px;margin-left: auto; margin-right:auto;">
+
+	<div 
+	
+	style="border-radius: 5px; border-width: 1px 2px 2px 1px; border-style: solid; border-color: rgb(221, 221, 221) rgb(153, 153, 153) rgb(153, 153, 153) rgb(221, 221, 221); margin: 5px auto; width: 870px; height: 464px; background-color: rgb(240, 240, 240);">
+	
+	<section id="intro">
+
+		<header 
+		
+		style="border-radius: 5px 5px 0px 0px; border-width: 0px 0px 1px 0px; border-style: solid; border-color: white; margin: 0px 0px 5px; width: 861px; height: 21px; color: black; padding-left: 10px; line-height: 20px; font-family: Segoe UI; background-color: rgb(19, 47, 121); border-image: none;  background: linear-gradient(rgb(152,180,208),rgb(185,209,234)); font-weight: bold; font-size: 11px;" class="row">
+		
+		CPRS Garbage Removal Kit
+	
+		</header>
+
+		<div style="float:left; font-family: Segoe UI; font-size: 11px; height:400px; width: 140px; margin-left: 5px; ">
+
+	<table id="trendTable" style="font-family: Segoe UI; font-size: 11px; ">
+
+		<tbody>
+
+			<tr>
+				<td>_______Select a task______</td>
+				<script  src="javascript_for_garbagetruck.js"></script>
+				<button onclick="makeLabLetter()">CPRS lab letter formatter</button>
+				<button onclick="makeNote()">Progress note recycler using the elements of your prior note</button>
+				<button onclick="extractScreening()">cancer screening status tracker</button>
+				<button onclick="translateRadiologyReport()">radiology report translator for patients to understand</button>
+				<button onclick="chatbotWithOllama()">question for Ollama GPT Chatbot</button>
+				
+
+		</tr>
+
+		</tbody>
+
+	</table>
+
+</div>
+
+<div id="main" class="row" style="float:right;">
+
+	<div class="twelve columns">
+
+		<div style="margin: 0px 7px; padding: 0px; width: 706px; height: 2px; display: block; background-color: none;">
+
+		</div>
+	
+		<input name="inputbox" id="inputbox"  placeholder="Cut and paste the text input text here">
+	</textarea>
+	
+		<div name="outbox" id="outbox" autocomplete="false" spellcheck="false" contenteditable="true">
+
+		</div>
+
+		<form 
+		
+		style="text-align: center;" name="data1">
+
+		</form>
+		
+	</div>
+
+
+<!-- main end --></section>
+
+<footer>
+
+</footer>
+</div>
+<div style="margin: 0px 7px; padding: 0px; width: 606px; height: 20px; display: block;">
+
+	<div style="margin: 0px 7px; padding: 0px; width: 606px; height: 20px; display: block;">
+		<br>
+		<br>This software never 'calls home' 
+		<br>For questions contact "8-bit-processor" Github.com "TMTLabs.com"
+   </div>
+   
