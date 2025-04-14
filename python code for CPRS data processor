@@ -1,0 +1,180 @@
+import tkinter as tk
+from tkinter import filedialog
+from PIL import ImageTk,Image
+from ollama import chat
+from ollama import ChatResponse
+import PyPDF2
+import pyperclip
+
+class App:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("TMTLABS CPRS TOOLKIT")
+
+        # Get the screen width and height
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+
+        # Calculate the size of the window (80% of the screen)
+        window_width = int(screen_width * 0.8)
+        window_height = int(screen_height * 0.8)
+        top_margin_adjustment = int(window_height*0.1)
+
+        # Set the position of the window to be in the center
+        x_pos = int((screen_width - window_width) / 2)
+        y_pos = int((screen_height - window_height) / 2)-top_margin_adjustment
+        root.geometry(f"{window_width}x{window_height}+{x_pos}+{y_pos}")
+
+        # Create frame for textbox1
+        self.frame1 = tk.Frame(root, bg="lightgrey",highlightthickness=3,highlightbackground="black")
+        self.frame1.pack(side=tk.TOP, expand=True, fill="both", padx=10, pady=10)
+
+        # Create the first text box
+        # Create image box
+        self.image_box = tk.Label(self.frame1)
+        self.image_box.pack(side=tk.TOP, fill="x",expand=True, padx=10, pady=5)
+
+        # Load image
+        image_path = r"C:\Users\TCTlabs\Desktop\TMTLabs\Python Folder\executable project\image_folder\tmtlabsflattenedlogo.png"
+        self.original_image = Image.open(image_path)
+        self.resized_image = self.original_image.resize((100, 50), Image.LANCZOS)  # Resize the image to (100x50) pixels
+        self.reimage = ImageTk.PhotoImage(self.resized_image)
+        self.image_box.config(image=self.reimage)  # Set the image for the label
+
+        self.text_box1_frame = tk.Frame(self.frame1, bg="white")
+        self.text_box1_frame.pack(fill="both")
+        self.text_box1 = tk.Text(self.text_box1_frame,height=20,font=20,bg="white", highlightcolor="red", highlightthickness=2)
+        self.text_box1.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Create frame for textbox2
+        self.frame2 = tk.Frame(root, bg="lightgrey",highlightthickness=3,highlightbackground="black")
+        self.frame2.pack(side=tk.BOTTOM, expand=True, fill="both", padx=10, pady=10)
+
+        # Create the second text box
+        self.text_box2_label = tk.Label(self.frame2, font=20,text="Inbox:")
+        self.text_box2_label.pack(side=tk.TOP)
+        self.text_box2_frame = tk.Frame(self.frame2,bg="white")
+        self.text_box2_frame.pack(fill="both", expand=True)
+        self.text_box2 = tk.Text(self.text_box2_frame, font=20,height=15,bg="white", highlightcolor="red", highlightthickness=2)
+        self.text_box2.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Create the button bar frame
+        self.button_frame = tk.Frame(root)
+        self.button_frame.pack(fill="both",expand=True, padx=10, pady=0)
+
+        self.cut_button = tk.Button(self.button_frame, height=2,width=4, font=15,text="Cut Outbox Text to Clipboard", command=self.cut)
+        self.cut_button.pack(side=tk.LEFT,fill="x",expand=True,padx=5)
+
+        paste_button = tk.Button(self.button_frame, height=2,width=4, font=15,text="Paste Clipboard Text to Inbox", command=self.paste)
+        paste_button.pack(side=tk.LEFT,fill="x",expand=True,padx=5)
+
+        copy_button = tk.Button(self.button_frame,height=2,width=4,  font=15,text="Outbox Text CPRS formatter", command=self.clean_text)
+        copy_button.pack(side=tk.LEFT,fill='x',expand=True,padx=5)
+        
+        self.cut_button = tk.Button(self.button_frame, height=2,width=4, font=15,text="Reset Textboxes and Erase", command=self.eraser)
+        self.cut_button.pack(side=tk.LEFT,fill="x",expand=True,padx=5)
+
+        pdf_button = tk.Button(self.button_frame, height=2,width=4, font=15,text="Convert a Pdf file into text", command=lambda: app.pdftotext())
+        pdf_button.pack(side=tk.LEFT,fill="x",expand=True,padx=5)
+        
+        ollama_button = tk.Button(self.button_frame, height=2,width=4, font=15,text="Get help from Ollama GPT", command=lambda: app.ollama_response())
+        ollama_button.pack(side=tk.LEFT,fill="x",expand=True,padx=5)
+
+
+    def cut(self):
+        try:
+            text = self.text_box1.get('1.0', 'end-1c')
+            pyperclip.copy(text)
+            print("Text copied to clipboard.")
+        except tk.TclError:
+            print("There was an error - unable to cut text from text_box1")
+        self.text_box1.delete('1.0','end')
+        return
+    
+    def copy(self):
+        try:
+            text = self.text_box1.get('1.0', 'end-1c')
+            pyperclip.copy(text)
+            print("Text copied to clipboard.")
+        except tk.TclError:
+            print("There was an error - unable to cut text from text_box1")
+            self.text_box2.delete('1.0','end')
+            self.text_box2.insert('1.0',"The text has been copied")
+        return
+
+    def paste(self):
+        try:
+            if pyperclip.paste():
+                self.text_box2.delete('1.0', 'end')
+                self.text_box2.insert('1.0', pyperclip.paste())
+            else:
+                print("Nothing in the clipboard.")
+        except tk.TclError as e:
+            print(f"An error occurred: {e}")
+            return
+    
+    def eraser(self):
+        self.text_box1.delete('1.0','end')
+        self.text_box2.delete('1.0','end')
+        return
+    
+    def clean_text(self):
+        # Junk list
+        bad_strings = ["!","@","#","$","%","^","*","_","&","(",")","   ","+","badstring1", "badstring2","badstring3",
+                       "metadata1", "metadata2", "metadata3","badchar1", "badchar2", "badchar3"]
+
+        text = self.text_box1.get('1.0', 'end-1c')
+
+        try:
+            # Remove substrings using replace
+            for bad_string in bad_strings:
+                text = text.replace(bad_string, "")
+            self.text_box1.delete('1.0','end')
+            self.text_box1.insert('1.0',text)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    def pdftotext(self)-> None:
+        # Select a folder and update the folder label.
+        self.folder_path = filedialog.askopenfilename(title="Select a folder")
+        print(f"the file and path is {self.folder_path}")
+        # extract text from a single PDF file.    
+        try:
+            pdf_file_obj = open(self.folder_path, 'rb')
+            pdf_reader = PyPDF2.PdfReader(pdf_file_obj)
+            text = ''
+            for page in pdf_reader.pages:
+                text += page.extract_text()
+            pdf_file_obj.close()
+            self.text_box1.delete('1.0','end')
+            self.text_box1.insert('1.0', text)
+            return print(text)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return None
+
+    def ollama_response(self):
+        try:
+            user_input = self.text_box2.get('1.0', 'end-1c')
+            if not user_input.strip():
+                return
+            self.text_box2.delete('1.0', 'end')
+            response: ChatResponse = chat(model='llama3', messages=[{
+                'role': 'user',
+                'content': user_input,
+                },
+                ])
+            # access fields directly from the response object
+            print(response.message.content)
+            return_message = f"You-> {user_input}\n\nOllamabot->{response.message.content}\n"
+            self.text_box1.delete('1.0','end')
+            self.text_box1.insert('1.0', return_message)
+        except tk.TclError as e:
+            print(f"Error: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+
+
+root = tk.Tk()
+app = App(root)
+root.mainloop()
