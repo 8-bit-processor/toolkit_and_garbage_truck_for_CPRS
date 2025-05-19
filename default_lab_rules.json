@@ -1,0 +1,86 @@
+{
+    "sodium": [
+        {"rule": ">=155", "action": "go-to the emergency room"},
+        {"rule": "<=126", "action": "go to the emergency room"},
+        {"rule": ">=146", "action": "clinician review"},
+        {"rule": "<=132", "action": "clinician review"}
+    ],
+    "potassium": [
+        {"rule": ">=5.6", "action": "go to the emergency room"},
+        {"rule": "<=3.0", "action": "go to the emergency room"},
+        {"rule": ">=5.2", "action": "clinician review"},
+        {"rule": "<3.5", "action": "clinician review"}
+    ],
+
+    "chloride": [
+        {"rule": ">=115.0", "action": "clinician review"},
+        {"rule": "<=90.0", "action": "clinician review"}
+    ],
+
+    "bicarb": [
+        {"rule": ">=35", "action": "clinician review"},
+        {"rule": "<=20", "action": "clinician review"}
+    ],
+
+    "bun": [
+        {"rule": ">=35", "action": "clinician review"},
+        {"rule": "<=5", "action": "clinician review"},
+        {"rule": ">=80", "action": "go to the emergency room"}
+    ],
+
+    "creatinine": [
+        {"rule": ">=5.0", "action": "go to the emergency room"},
+        {"rule": ">=1.5", "action": "clinician review"}
+    ],
+
+    "glucose": [
+        {"rule": ">600", "action": "go to the emergency room"},
+        {"rule": ">400", "action": "clinician review"},
+        {"rule": "<60", "action": "clinician review"}
+    ],
+    "calcium": [
+        {"rule": "<=8.0", "action": "clinician review"},
+        {"rule": ">=11", "action": "clinician review"}
+ 
+    ],
+    "magnesium": [
+        {"rule": "<=1.4", "action": "clinician review"},
+        {"rule": ">=3.0", "action": "clinician review"}
+
+    ],
+
+    "phosphorus": [
+        {"rule": "<=2.0", "action": "clinician review"},
+        {"rule": ">=4.0", "action": "clinician review"}
+    ],
+    "whitecellcount": [
+        {"rule": ">=14", "action": "clinician review"},
+        {"rule": "<=3.2", "action": "clinician review"}
+    ],
+    "hemoglobin": [
+        {"rule": ">=20", "action": "go to the emergency room"},
+        {"rule": "<=7", "action": "go to the emergency room"},
+        {"rule": ">=18", "action": "clinician review"},
+        {"rule": "<=10", "action": "clinician review"}
+    ],
+
+    "hematocrit": [
+        {"rule": ">=50", "action": "go to the emergency room"},
+        {"rule": "<=25", "action": "go to the emergency room"},
+        {"rule": ">45", "action": "clinician review"},
+        {"rule": "<30", "action": "clinician review"}
+    ],
+    "platelets": [
+        {"rule": ">500", "action": "clinician review"},
+        {"rule": "<=80", "action": "clinician review"}
+    ],
+    "a1c": [
+        {"rule": ">10", "action": "clinician review"},
+        {"rule": "<4.5", "action": "clinician review"}
+    ],
+
+    "tsh": [
+        {"rule": ">15", "action": "clinician review"},
+        {"rule": "<=.01", "action": "clinician review"}
+    ]
+}
